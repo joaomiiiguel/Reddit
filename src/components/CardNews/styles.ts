@@ -30,6 +30,12 @@ export const SubTitle = styled.Text`
   opacity: 0.3;
 `;
 
+export const FooterView = styled.View`
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+`;
+
 export const FooterText = styled.Text`
   font-size: 10px;
   opacity: 0.5;

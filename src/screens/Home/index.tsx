@@ -5,7 +5,7 @@ import CardNews from '../../components/CardNews';
 import {Container} from './styles';
 
 export interface INewsResponse {
-  id: String;
+  id?: String;
   title?: String | 'Desconhecido';
   author: String;
   num_comments?: Number;
@@ -47,7 +47,17 @@ export default function Home() {
         <FlatList
           data={newsData}
           showsVerticalScrollIndicator={false}
-          renderItem={({item: news}) => <CardNews data={news.data} />}
+          renderItem={({item: news}) => (
+            <CardNews
+              title={news.data.title}
+              author={news.data.author}
+              num_comments={news.data.num_comments}
+              score={news.data.score}
+              created={news.data.created}
+              thumbnail={news.data.thumbnail}
+              url_overridden_by_dest={news.data.url_overridden_by_dest}
+            />
+          )}
           keyExtractor={news => news.data.id}
         />
       )}
