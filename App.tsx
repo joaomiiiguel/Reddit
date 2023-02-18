@@ -1,6 +1,6 @@
 import React from 'react';
-import Home from './src/screens/Home';
+import Router from './src/Router';
 
 export default function App() {
-  return <Home />;
+  return <Router />;
 }
