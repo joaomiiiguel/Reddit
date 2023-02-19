@@ -1,13 +1,26 @@
-import {makeAutoObservable, observable} from 'mobx';
+import {makeAutoObservable, observable, action} from 'mobx';
 
 class NewsStore {
-  newsData = [];
+  newsDataAPI: Object = [];
+  category: String = 'new';
 
   constructor() {
     makeAutoObservable(this, {
-      newsData: observable,
+      newsDataAPI: observable,
+      category: observable,
+      addNewsToData: action,
+      changeCategory: action,
     });
   }
+
+  addNewsToData = (object: Object) => {
+    this.newsDataAPI = [];
+    this.newsDataAPI = object;
+  };
+
+  changeCategory = (value: String) => {
+    this.category = value;
+  };
 }
 
 export default new NewsStore();

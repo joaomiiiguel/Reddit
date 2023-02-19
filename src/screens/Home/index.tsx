@@ -1,33 +1,32 @@
 import {FlatList, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import api from '../../services/api';
-import CardNews from '../../components/CardNews';
+import CardNews from '../../Components/CardNews';
 import {Container} from './styles';
+import {inject, observer} from 'mobx-react';
+import {useRoute} from '@react-navigation/native';
 
-export interface INewsResponse {
-  id?: String;
-  title?: String | 'Desconhecido';
-  author: String;
-  num_comments?: Number;
-  score?: Number;
-  created?: Number;
-  thumbnail?: String;
-  url_overridden_by_dest?: String;
-}
-
-export default function Home() {
-  const [newsData, setNewsData] = useState<any>({});
+const Home = ({navigation, NewsStore}) => {
   const [loading, setLoading] = useState<Boolean>(true);
+  const {category, addNewsToData, newsDataAPI, changeCategory} = NewsStore;
+  const route = useRoute();
 
-  async function loadNews() {
-    const listNews = '/r/pics/hot';
+  async function loadNews(catProps: string) {
+    const listNews = `/${catProps}`;
+    setLoading(true);
+
+    navigation.addListener('tabPress', (_e: any) => {
+      changeCategory(route.name);
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const resp = await api
       .get(listNews)
       .then((response: any) => {
-        setNewsData(response.data.data.children);
-        setLoading(false);
+        addNewsToData(response.data.data.children);
+        setTimeout(() => {
+          setLoading(false);
+        }, 1000);
       })
       .catch((e: Error) => {
         console.log(e);
@@ -35,26 +34,11 @@ export default function Home() {
       });
   }
 
-  // function OrderList() {
-  //   let newListNews = [...newsData];
-  //   console.log('clickou', newListNews);
-
-  //   newListNews.sort((a, b) => {
-  //     if (a.name > b.name) {
-  //       return 1;
-  //     } else if (b.name > a.name) {
-  //       return -1;
-  //     } else {
-  //       return 0;
-  //     }
-  //   });
-
-  //   setNewsData(newListNews);
-  // }
-
   useEffect(() => {
-    loadNews();
-  }, []);
+    loadNews(category);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation, category]);
 
   return (
     <Container>
@@ -62,7 +46,7 @@ export default function Home() {
         <Text>Carregando...</Text>
       ) : (
         <FlatList
-          data={newsData}
+          data={newsDataAPI}
           showsVerticalScrollIndicator={false}
           renderItem={({item: news}) => (
             <CardNews
@@ -80,4 +64,6 @@ export default function Home() {
       )}
     </Container>
   );
-}
+};
+
+export default inject('NewsStore')(observer(Home));
