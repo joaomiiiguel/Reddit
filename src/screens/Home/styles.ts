@@ -16,3 +16,27 @@ export const TitleHeader = styled.Text`
   padding-top: 5%;
   padding-bottom: 5%;
 `;
+
+export const TabList = styled.View`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const TabHome = styled.TouchableOpacity`
+  width: 25%;
+  text-align: center;
+  padding: 10px 10px;
+`;
+export const TabHomeActive = styled.TouchableOpacity`
+  width: 25%;
+  text-align: center;
+  padding: 10px 10px;
+  background-color: orange;
+`;
+
+export const TabText = styled.Text`
+  text-align: center;
+`;

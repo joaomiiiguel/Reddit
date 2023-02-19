@@ -39,10 +39,13 @@ export default function CardNews(props: INewsResponse) {
     }
   }
 
-  async function navigateToDetail(url_overridden_by_dest: string) {
+  async function navigateToDetail(
+    url_overridden_by_dest: string,
+    title: string,
+  ) {
     const supported = await Linking.canOpenURL(url_overridden_by_dest);
     if (supported) {
-      navigation.navigate('Detail', {url_overridden_by_dest});
+      navigation.navigate('Detail', {url_overridden_by_dest, title});
     } else {
       Alert.alert(`Don't know how to open this URL: ${url_overridden_by_dest}`);
     }
@@ -53,7 +56,10 @@ export default function CardNews(props: INewsResponse) {
   }, []);
 
   return (
-    <Container onPress={() => navigateToDetail(props.url_overridden_by_dest)}>
+    <Container
+      onPress={() =>
+        navigateToDetail(props.url_overridden_by_dest, props.title)
+      }>
       {props.thumbnail && <Thumbnail source={{uri: `${props.thumbnail}`}} />}
       <ViewContent>
         <HeaderContent>

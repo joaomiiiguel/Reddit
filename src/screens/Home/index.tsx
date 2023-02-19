@@ -35,6 +35,23 @@ export default function Home() {
       });
   }
 
+  // function OrderList() {
+  //   let newListNews = [...newsData];
+  //   console.log('clickou', newListNews);
+
+  //   newListNews.sort((a, b) => {
+  //     if (a.name > b.name) {
+  //       return 1;
+  //     } else if (b.name > a.name) {
+  //       return -1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
+
+  //   setNewsData(newListNews);
+  // }
+
   useEffect(() => {
     loadNews();
   }, []);
