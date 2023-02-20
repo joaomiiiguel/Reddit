@@ -5,9 +5,11 @@ import CardNews from '../../Components/CardNews';
 import {Container} from './styles';
 import {inject, observer} from 'mobx-react';
 import {useRoute} from '@react-navigation/native';
+import CardSkeleton from '../../Components/CardSkeleton';
 
 const Home = ({navigation, NewsStore}) => {
   const [loading, setLoading] = useState<Boolean>(true);
+  const [isFetching, setIsFetching] = useState(false);
   const {category, addNewsToData, newsDataAPI, changeCategory} = NewsStore;
   const route = useRoute();
 
@@ -26,12 +28,20 @@ const Home = ({navigation, NewsStore}) => {
         addNewsToData(response.data.data.children);
         setTimeout(() => {
           setLoading(false);
+          setIsFetching(false);
         }, 1000);
       })
       .catch((e: Error) => {
         console.log(e);
         setLoading(false);
       });
+  }
+
+  function onRefresh() {
+    setIsFetching(true);
+    loadNews(category);
+
+    setIsFetching(false);
   }
 
   useEffect(() => {
@@ -43,17 +53,22 @@ const Home = ({navigation, NewsStore}) => {
   return (
     <Container>
       {loading ? (
-        <Text>Carregando...</Text>
+        <FlatList
+          data={[1, 2, 3, 4, 5]}
+          renderItem={({}) => <CardSkeleton />}
+        />
       ) : (
         <FlatList
           data={newsDataAPI}
+          onRefresh={() => onRefresh()}
+          refreshing={isFetching}
           showsVerticalScrollIndicator={false}
           renderItem={({item: news}) => (
             <CardNews
               title={news.data.title}
               author={news.data.author}
               num_comments={news.data.num_comments}
-              score={news.data.score}
+              ups={news.data.ups}
               created={news.data.created}
               thumbnail={news.data.thumbnail}
               url_overridden_by_dest={news.data.url_overridden_by_dest}

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {INewsResponse} from '../../screens/Home';
+import {INewsResponse} from '../../Models/News';
 import {
   Container,
   Title,
@@ -65,12 +65,12 @@ export default function CardNews(props: INewsResponse) {
         <HeaderContent>
           <FooterView>
             <SubTitle> {timePosted} </SubTitle>
+            <SubTitle>Posted by {props.author}</SubTitle>
           </FooterView>
           <Title>{props.title}</Title>
-          <SubTitle>Posted by {props.author}</SubTitle>
         </HeaderContent>
         <FooterView>
-          <FooterText>Score: {props.score}</FooterText>
+          <FooterText>Score: {props.ups}</FooterText>
           <FooterText>{props.num_comments} comments</FooterText>
         </FooterView>
       </ViewContent>

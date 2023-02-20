@@ -15,7 +15,7 @@ export interface INewsResponse {
   title?: String | 'Desconhecido';
   author: String;
   num_comments?: Number;
-  score?: Number;
+  ups?: Number;
   created?: Number;
   thumbnail?: String;
   url_overridden_by_dest?: String;

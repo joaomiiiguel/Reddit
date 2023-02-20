@@ -26,7 +26,7 @@ export const Title = styled.Text`
 `;
 
 export const SubTitle = styled.Text`
-  font-size: 10px;
+  font-size: 8px;
   opacity: 0.3;
 `;
 
